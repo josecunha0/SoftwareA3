@@ -4,7 +4,6 @@
  */
 package Principal;
 
-// Testando a integração netbeans - github
 public class Principal {
 
     /**
@@ -15,5 +14,3 @@ public class Principal {
     }
     
 }
-
-// Testando integração vscode - github...
