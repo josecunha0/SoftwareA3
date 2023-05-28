@@ -4,10 +4,7 @@
  */
 package Principal;
 
-/**
- *
- * @author cxcxcx
- */
+// Testando a integração netbeans - github
 public class Principal {
 
     /**
