@@ -47,7 +47,7 @@ public class AdministradorDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     String senha = rs.getString("senha");
-                    return new Administrador(id, senha);
+                    return new Administrador(0, id, senha);
                 }
             }
         } catch (SQLException e) {
