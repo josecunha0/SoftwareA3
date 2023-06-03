@@ -27,7 +27,7 @@ public class AdministradorDAO {
             String database = "Dev";
             String url = "jdbc:mysql://" + server + ":3306/" + database + "?useTimezone=true&serverTimezone=UTC";
             String user = "root";
-            String password = "NbCsf8!py";
+            String password = "******";
 
             connection = DriverManager.getConnection(url, user, password);
 
