@@ -6,17 +6,17 @@ public class Ferramenta {
     private int Id;
     private String nome;
     private String marca;
-    private double custoDeAquisicao;
+    private double custo_de_aquisicao;
 
 //    Métodos Construtores
     public Ferramenta() {
     }
 
-    public Ferramenta(int Id, String nome, String marca, double custoDeAquisicao) {
+    public Ferramenta(int Id, String nome, String marca, double custo_de_aquisicao) {
         this.Id = Id;
         this.nome = nome;
         this.marca = marca;
-        this.custoDeAquisicao = custoDeAquisicao;
+        this.custo_de_aquisicao = custo_de_aquisicao;
     }
 
 //    Métodos Getter e Setter
@@ -45,11 +45,11 @@ public class Ferramenta {
     }
 
     public double getCustoDeAquisicao() {
-        return custoDeAquisicao;
+        return custo_de_aquisicao;
     }
 
-    public void setCustoDeAquisicao(double custoDeAquisicao) {
-        this.custoDeAquisicao = custoDeAquisicao;
+    public void setCustoDeAquisicao(double custo_de_aquisicao) {
+        this.custo_de_aquisicao = custo_de_aquisicao;
     }
 
 //    Gera um relatório da soma do custo de aquisição das ferramentas    
