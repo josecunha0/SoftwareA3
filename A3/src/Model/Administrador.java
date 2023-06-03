@@ -42,7 +42,7 @@ public class Administrador {
         this.nome = nome;
     }
     
-//    Cria o login do administrador
+//    Cria o login do administrador...
     public void criarLogin() {
         
     }
