@@ -6,13 +6,13 @@ public class Amigo {
     private int Id;
     private String nome;
     private String email;
-    private int telefone;
+    private String telefone;
 
 //    Métodos construtores
     public Amigo() {
     }
 
-    public Amigo(int Id, String nome, String email, int telefone) {
+    public Amigo(int Id, String nome, String email, String telefone) {
         this.Id = Id;
         this.nome = nome;
         this.email = email;
@@ -44,11 +44,11 @@ public class Amigo {
         this.email = email;
     }
 
-    public int getTelefone() {
+    public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(int telefone) {
+    public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
     
