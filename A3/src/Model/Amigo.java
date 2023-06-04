@@ -1,12 +1,19 @@
 package Model;
 
 public class Amigo {
+    
+    
 
 //    Atributos
     private int Id;
     private String nome;
     private String email;
     private String telefone;
+    
+    @Override
+    public String toString() {
+        return "Amigo [id=" + Id + ", nome=" + nome + ", telefone=" + telefone + ", email=" + email + "]";
+    }
 
 //    Métodos construtores
     public Amigo() {
