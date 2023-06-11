@@ -14,6 +14,9 @@ import db.DbException;
 public class AmigoDao {
 
 	private Connection conn;
+        
+        public AmigoDao() {
+        }
 	
 	public AmigoDao() {
 		this.conn = DB.getConnection();

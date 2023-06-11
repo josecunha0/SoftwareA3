@@ -16,7 +16,7 @@ public class Emprestimo {
 
 //    Métodos construtores
     public Emprestimo() {
-        this.dao = new Emprestimo();
+        this.dao = new EmprestimoDao();
     }
 
     public Emprestimo(int IdFerramenta, String NomeAmigo, Date dataInicio, Date dataDevolucao, String EmailAmigo) {
@@ -25,7 +25,7 @@ public class Emprestimo {
         this.dataInicio = dataInicio;
         this.dataDevolucao = dataDevolucao;
         this.EmailAmigo = EmailAmigo;
-        this.dao = new Emprestimo();
+        this.dao = new EmprestimoDao();
     }
 
 //    Métodos Getter e Setter

@@ -15,6 +15,9 @@ import db.DbException;
 public class EmprestimoDao {
 
     private Connection conn;
+    
+    public EmprestimoDao() {
+    }
 
     public EmprestimoDao() {
         this.conn = DB.getConnection();

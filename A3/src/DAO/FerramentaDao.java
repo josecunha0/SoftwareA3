@@ -14,6 +14,9 @@ import db.DbException;
 public class FerramentaDao {
 
 	private Connection conn;
+        
+        public FerramentaDao() {
+        }
 	
 	public FerramentaDao() {
 		this.conn = DB.getConnection();

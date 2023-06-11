@@ -12,13 +12,13 @@ public class Administrador {
 
 //    Métodos construtores
     public Administrador() {
-        this.dao = new Administrador();
+        this.dao = new AdministradorDao();
     }
 
     public Administrador(int Id, String senha) {
         this.Id = Id;
         this.senha = senha;
-        this.dao = new Administrador();
+        this.dao = new AdministradorDao();
     }
 
 //    Métodos Getter e Setter
@@ -70,11 +70,13 @@ public class Administrador {
     }
     
     public boolean loginCorreto(int Id, String senha) {
+        boolean correto = false;
         for (int i = 0; i < getListaAdm().size(); i++) {
-            if (getListaAdm().get(i).getId == Id && getListaAdm().get(i).getSenha == senha){
-                return true;
+            if (getListaAdm().get(i).getId() == Id && getListaAdm().get(i).getSenha().equals(senha)){
+                correto = true;
+                break;
             }
         }
-        
+        return correto;
     }
 }

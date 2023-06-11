@@ -15,7 +15,7 @@ public class Ferramenta {
 
 //    Métodos Construtores
     public Ferramenta() {
-        this.dao = new Ferramenta();
+        this.dao = new FerramentaDao();
     }
 
     public Ferramenta(int Id, String nome, String marca, double custoDeAquisicao, boolean disponivel) {
@@ -24,7 +24,7 @@ public class Ferramenta {
         this.marca = marca;
         this.custoDeAquisicao = custoDeAquisicao;
         this.disponivel = disponivel;
-        this.dao = new Ferramenta();
+        this.dao = new FerramentaDao();
     }
 
 //    Métodos Getter e Setter

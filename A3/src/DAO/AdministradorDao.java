@@ -14,6 +14,9 @@ public class AdministradorDao {
 
     private Connection conn;
     
+    public AdministradorDao() {
+    }
+    
     public AdministradorDao(Connection conn) {
         this.conn = conn;
     }
