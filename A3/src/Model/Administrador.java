@@ -1,5 +1,7 @@
 package Model;
 
+import DAO.AdministradorDao;
+
 public class Administrador {
 
 //    Atributos
@@ -40,6 +42,9 @@ public class Administrador {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+    
+    public void InsertAdministrador(Administrador obj) {
     }
     
 //    Cria o login do administrador...
