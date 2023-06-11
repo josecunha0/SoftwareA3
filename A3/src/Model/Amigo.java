@@ -6,7 +6,7 @@ import java.util.*;
 public class Amigo {
     
 //    Atributos
-    private boolean devedor = false;
+    private boolean devedor;
     private String nome;
     private String email;
     private String telefone;
@@ -22,10 +22,11 @@ public class Amigo {
         this.dao = new AmigoDao();
     }
 
-    public Amigo(String nome, String email, String telefone) {
+    public Amigo(String nome, String email, String telefone, boolean devedor) {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
+        this.devedor = devedor;
         this.dao = new AmigoDao();
     }
 
@@ -66,8 +67,8 @@ public class Amigo {
         return dao.findAll();
     }
     
-    public boolean InsertAmigo(String nome, String email, String telefone) {
-        Amigo obj = new Amigo(nome, email, telefone);
+    public boolean InsertAmigo(String nome, String email, String telefone, boolean devedor) {
+        Amigo obj = new Amigo(nome, email, telefone, devedor);
         dao.insert(obj);
         return true;
     }
@@ -77,8 +78,8 @@ public class Amigo {
         return true;
     }
     
-    public boolean UpdateAmigo(String nome, String email, String telefone) {
-        Amigo obj = new Amigo(nome, email, telefone);
+    public boolean UpdateAmigo(String nome, String email, String telefone, boolean devedor) {
+        Amigo obj = new Amigo(nome, email, telefone, devedor);
         dao.update(obj);
         return true;
     }

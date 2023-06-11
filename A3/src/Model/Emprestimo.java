@@ -1,50 +1,48 @@
 package Model;
+
 import java.util.*;
+import DAO.EmprestimoDao;
 
 public class Emprestimo {
 
 //    Atributos
-    private int Id;
-    private String ferramenta;
-    private String amigo;
+    private int IdFerramenta;
+    private String NomeAmigo;
     private Date dataInicio;
     private Date dataDevolucao;
+    private String EmailAmigo;
+    private EmprestimoDao dao;
+    
 
 //    Métodos construtores
     public Emprestimo() {
+        this.dao = new Emprestimo();
     }
 
-    public Emprestimo(int Id, String ferramenta, String amigo, Date dataInicio, Date dataDevolucao) {
-        this.Id = Id;
-        this.ferramenta = ferramenta;
-        this.amigo = amigo;
+    public Emprestimo(int IdFerramenta, String NomeAmigo, Date dataInicio, Date dataDevolucao, String EmailAmigo) {
+        this.IdFerramenta = IdFerramenta;
+        this.NomeAmigo = NomeAmigo;
         this.dataInicio = dataInicio;
         this.dataDevolucao = dataDevolucao;
+        this.EmailAmigo = EmailAmigo;
+        this.dao = new Emprestimo();
     }
 
 //    Métodos Getter e Setter
-    public int getId() {
-        return Id;
+    public int getIdFerramenta() {
+        return IdFerramenta;
     }
 
-    public void setId(int Id) {
-        this.Id = Id;
+    public void setFerramenta(int IdFerramenta) {
+        this.IdFerramenta = IdFerramenta;
     }
 
-    public String getFerramenta() {
-        return ferramenta;
+    public String getNomeAmigo() {
+        return NomeAmigo;
     }
 
-    public void setFerramenta(String ferramenta) {
-        this.ferramenta = ferramenta;
-    }
-
-    public String getAmigo() {
-        return amigo;
-    }
-
-    public void setAmigo(String amigo) {
-        this.amigo = amigo;
+    public void setNomeAmigo(String NomeAmigo) {
+        this.NomeAmigo = NomeAmigo;
     }
 
     public Date getDataInicio() {
@@ -61,6 +59,40 @@ public class Emprestimo {
 
     public void setDataDevolucao(Date dataDevolucao) {
         this.dataDevolucao = dataDevolucao;
+    }
+    
+    public String getEmailAmigo() {
+        return EmailAmigo;
+    }
+    
+    public void setEmailAmigo(String EmailAmigo) {
+        this.EmailAmigo = EmailAmigo;
+    }
+
+    public boolean InsertEmprestimo(int IdFerramenta, String NomeAmigo, Date dataInicio, Date dataDevolucao, String EmailAmigo) {
+        Emprestimo obj = new Emprestimo(IdFerramenta, NomeAmigo, dataInicio, dataDevolucao, EmailAmigo);
+        dao.insert(obj);
+        return true;
+    }
+    
+    public boolean DeleteEmprestimo(int IdFerramenta, String EmailAmigo) {
+        dao.deleteById(IdFerramenta, EmailAmigo);
+        return true;
+    }
+    
+    public boolean UpdateEmprestimo(int IdFerramenta, String NomeAmigo, Date dataInicio, Date dataDevolucao, String EmailAmigo) {
+        Emprestimo obj = new Emprestimo(IdFerramenta, NomeAmigo, dataInicio, dataDevolucao, EmailAmigo);
+        dao.update(obj);
+        return true;
+    }
+    
+    public Emprestimo CarregaEmprestimo(int IdFerramenta, String EmailAmigo) {
+        dao.findById(IdFerramenta, EmailAmigo);
+        return null;
+    }
+    
+    public List<Emprestimo> getListaEmprestimo() {
+        return dao.findAll();
     }
 
 //    Verifica se amigo já tem cadastro

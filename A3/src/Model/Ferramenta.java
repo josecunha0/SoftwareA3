@@ -1,22 +1,30 @@
 package Model;
 
+import DAO.FerramentaDao;
+import java.util.*;
+
 public class Ferramenta {
 
 //    Atributos
     private int Id;
     private String nome;
     private String marca;
-    private double custo_de_aquisicao;
+    private double custoDeAquisicao;
+    private boolean disponivel;
+    private final FerramentaDao dao;
 
 //    Métodos Construtores
     public Ferramenta() {
+        this.dao = new Ferramenta();
     }
 
-    public Ferramenta(int Id, String nome, String marca, double custo_de_aquisicao) {
+    public Ferramenta(int Id, String nome, String marca, double custoDeAquisicao, boolean disponivel) {
         this.Id = Id;
         this.nome = nome;
         this.marca = marca;
-        this.custo_de_aquisicao = custo_de_aquisicao;
+        this.custoDeAquisicao = custoDeAquisicao;
+        this.disponivel = disponivel;
+        this.dao = new Ferramenta();
     }
 
 //    Métodos Getter e Setter
@@ -45,11 +53,45 @@ public class Ferramenta {
     }
 
     public double getCustoDeAquisicao() {
-        return custo_de_aquisicao;
+        return custoDeAquisicao;
     }
 
-    public void setCustoDeAquisicao(double custo_de_aquisicao) {
-        this.custo_de_aquisicao = custo_de_aquisicao;
+    public void setCustoDeAquisicao(double custoDeAquisicao) {
+        this.custoDeAquisicao = custoDeAquisicao;
+    }
+    
+    public boolean getDisponivel() {
+        return disponivel;
+    }
+    
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
+    }
+    
+    public boolean InsertFerramenta(int Id, String nome, String marca, double custoDeAquisicao, boolean disponivel) {
+        Ferramenta obj = new Ferramenta(Id, nome, marca, custoDeAquisicao, disponivel);
+        dao.insert(obj);
+        return true;
+    }
+    
+    public boolean DeleteFerramenta(int Id) {
+        dao.deleteById(Id);
+        return true;
+    }
+    
+    public boolean UpdateFerramenta(int Id, String nome, String marca, double custoDeAquisicao, boolean disponivel) {
+        Ferramenta obj = new Ferramenta(Id, nome, marca, custoDeAquisicao, disponivel);
+        dao.update(obj);
+        return true;
+    }
+    
+    public Ferramenta CarregaFerramenta(int Id) {
+        dao.findById(Id);
+        return null;
+    }
+    
+    public List<Ferramenta> getListaFerramenta() {
+        return dao.findAll();
     }
 
 //    Gera um relatório da soma do custo de aquisição das ferramentas    
