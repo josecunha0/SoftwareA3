@@ -66,7 +66,8 @@ public class Amigo {
         return dao.findAll();
     }
     
-    public boolean InsertAmigo(Amigo obj) {
+    public boolean InsertAmigo(String nome, String email, String telefone) {
+        Amigo obj = new Amigo(nome, email, telefone);
         dao.insert(obj);
         return true;
     }
@@ -76,7 +77,8 @@ public class Amigo {
         return true;
     }
     
-    public boolean UpdateAmigo(Amigo obj) {
+    public boolean UpdateAmigo(String nome, String email, String telefone) {
+        Amigo obj = new Amigo(nome, email, telefone);
         dao.update(obj);
         return true;
     }
