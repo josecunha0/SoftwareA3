@@ -86,16 +86,42 @@ public class Ferramenta {
     }
     
     public Ferramenta CarregaFerramenta(int Id) {
-        dao.findById(Id);
-        return null;
+        Ferramenta obj = dao.findById(Id);
+        return obj;
     }
     
     public List<Ferramenta> getListaFerramenta() {
         return dao.findAll();
     }
+    
+    //    Verifica se ferramenta já foi cadastrada
+    public boolean verificarCadastroFerramenta(int Id) {
+        boolean cadastro = false;
+        for (int i = 0; i < getListaFerramenta().size(); i++) {
+            if (getListaFerramenta().get(i).getId() == Id) {
+                cadastro = true;
+                break;
+            }
+        }
+        return cadastro;
+    }
+    
+    public boolean ferramentaDisponivel(int Id) {
+        Ferramenta objFe = new Ferramenta();
+        objFe = CarregaFerramenta(Id);
+        if (objFe.getDisponivel() == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 //    Gera um relatório da soma do custo de aquisição das ferramentas    
-    public String relatorioFerramentas() {
-        return "s";
+    public double relatorioFerramentas() {
+        double custoTotal = 0;
+        for (int i = 0; i < getListaFerramenta().size(); i++) {
+            custoTotal += getListaFerramenta().get(i).getCustoDeAquisicao();
+        }
+        return custoTotal;
     }
 }

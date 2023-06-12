@@ -2,6 +2,7 @@ package Model;
 
 import DAO.AdministradorDao;
 import java.util.*;
+import javax.swing.JOptionPane;
 
 public class Administrador {
 
@@ -56,8 +57,8 @@ public class Administrador {
     }
     
     public Administrador CarregaAdministrador(int Id) {
-        dao.findById(Id);
-        return null;
+        Administrador obj = dao.findById(Id);
+        return obj;
     }
     
     public List<Administrador> getListaAdm() {
@@ -65,8 +66,18 @@ public class Administrador {
     }
     
 //    Cria o login do administrador...
-    public void criarLogin(int Id, String senha) {
-        InsertAdministrador(Id, senha);       
+    public boolean login(int Id, String senha) {
+        if (getListaAdm().size() == 0) {
+            InsertAdministrador(Id, senha);
+            JOptionPane.showMessageDialog(null, "Credenciais de login salvas com sucesso!");
+            return true;
+        } else {
+            if (loginCorreto(Id, senha)) {
+                return true;
+            } else {
+                return false;
+            }
+        } 
     }
     
     public boolean loginCorreto(int Id, String senha) {

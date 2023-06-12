@@ -2,6 +2,9 @@ package Model;
 
 import java.util.*;
 import DAO.EmprestimoDao;
+import Model.Ferramenta;
+import javax.swing.JOptionPane;
+import java.text.*;
 
 public class Emprestimo {
 
@@ -11,21 +14,29 @@ public class Emprestimo {
     private Date dataInicio;
     private Date dataDevolucao;
     private String EmailAmigo;
+    private boolean devolvido;
     private EmprestimoDao dao;
+    private Ferramenta ferramenta;
+    private Amigo amigo;
     
 
 //    Métodos construtores
     public Emprestimo() {
         this.dao = new EmprestimoDao();
+        this.ferramenta = new Ferramenta();
+        this.amigo = new Amigo();
     }
 
-    public Emprestimo(int IdFerramenta, String NomeAmigo, Date dataInicio, Date dataDevolucao, String EmailAmigo) {
+    public Emprestimo(int IdFerramenta, String NomeAmigo, Date dataInicio, Date dataDevolucao, String EmailAmigo, boolean devolvido) {
         this.IdFerramenta = IdFerramenta;
         this.NomeAmigo = NomeAmigo;
         this.dataInicio = dataInicio;
         this.dataDevolucao = dataDevolucao;
         this.EmailAmigo = EmailAmigo;
+        this.devolvido = devolvido;
         this.dao = new EmprestimoDao();
+        this.ferramenta = new Ferramenta();
+        this.amigo = new Amigo();
     }
 
 //    Métodos Getter e Setter
@@ -68,10 +79,21 @@ public class Emprestimo {
     public void setEmailAmigo(String EmailAmigo) {
         this.EmailAmigo = EmailAmigo;
     }
+    
+    public boolean getDevolvido() {
+        return devolvido;
+    }
+    
+    public void setDevolvido(boolean devolvido) {
+        this.devolvido = devolvido;
+    }
 
-    public boolean InsertEmprestimo(int IdFerramenta, String NomeAmigo, Date dataInicio, Date dataDevolucao, String EmailAmigo) {
-        Emprestimo obj = new Emprestimo(IdFerramenta, NomeAmigo, dataInicio, dataDevolucao, EmailAmigo);
+    public boolean InsertEmprestimo(int IdFerramenta, String NomeAmigo, Date dataInicio, Date dataDevolucao, String EmailAmigo, boolean devolvido) {
+        Emprestimo obj = new Emprestimo(IdFerramenta, NomeAmigo, dataInicio, dataDevolucao, EmailAmigo, devolvido);
         dao.insert(obj);
+        Ferramenta objFe = ferramenta.CarregaFerramenta(IdFerramenta);
+        objFe.setDisponivel(false);
+        ferramenta.UpdateFerramenta(objFe.getId(), objFe.getNome(), objFe.getMarca(), objFe.getCustoDeAquisicao(), objFe.getDisponivel());
         return true;
     }
     
@@ -80,43 +102,80 @@ public class Emprestimo {
         return true;
     }
     
-    public boolean UpdateEmprestimo(int IdFerramenta, String NomeAmigo, Date dataInicio, Date dataDevolucao, String EmailAmigo) {
-        Emprestimo obj = new Emprestimo(IdFerramenta, NomeAmigo, dataInicio, dataDevolucao, EmailAmigo);
+    public boolean UpdateEmprestimo(int IdFerramenta, String NomeAmigo, Date dataInicio, Date dataDevolucao, String EmailAmigo, boolean devolvido) {
+        Emprestimo obj = new Emprestimo(IdFerramenta, NomeAmigo, dataInicio, dataDevolucao, EmailAmigo, devolvido);
         dao.update(obj);
         return true;
     }
     
     public Emprestimo CarregaEmprestimo(int IdFerramenta, String EmailAmigo) {
-        dao.findById(IdFerramenta, EmailAmigo);
-        return null;
+        Emprestimo obj = dao.findById(IdFerramenta, EmailAmigo);
+        return obj;
     }
     
     public List<Emprestimo> getListaEmprestimo() {
         return dao.findAll();
     }
-
-//    Verifica se amigo já tem cadastro
-    public boolean verificarCadastroAmigo() {
-        return true;
-    }
     
-//    Verifica se ferramenta já foi cadastrada
-    public boolean verificarCadastroFerramenta() {
-        return true;
-    }
-    
-//    Verifica se amigo tem algum empréstimo ativo
-    public boolean emprestimoAtivo() {
-        return true;
+//    Retorna quantos empréstimos estão ativos
+    public int emprestimosAtivos() {
+        int ativos = 0;
+        for (int i = 0; i < getListaEmprestimo().size(); i++) {
+            if (getListaEmprestimo().get(i).getDevolvido()) {
+                ativos++;
+            }
+        }
+        return ativos;
     }
 
-//    Gera um relatório de todos os empréstimos
-    public String relatorioEmprestimo() {
-        return "s";
+//    Retorna o total de empréstimos realizados
+    public int totalEmprestimos() {
+        int total = getListaEmprestimo().size();
+        return total;
     }
     
-//    Verifica se o empréstimo foi devolvido
-    public boolean emprestimoDevolvido() {
-        return true;
+//    Registra a devolução de um empréstimo
+    public void emprestimoDevolvido(int IdFerramenta, String EmailAmigo) {
+        Emprestimo objEmp = new Emprestimo();
+        objEmp = CarregaEmprestimo(IdFerramenta, EmailAmigo);
+        objEmp.setDevolvido(true);
+        objEmp.UpdateEmprestimo(objEmp.getIdFerramenta(), objEmp.getNomeAmigo(), objEmp.getDataInicio(), objEmp.getDataDevolucao(), objEmp.getEmailAmigo(), objEmp.getDevolvido());
+        JOptionPane.showMessageDialog(null, "Devolução registrada com sucesso!");
+        
+        Ferramenta objFe = ferramenta.CarregaFerramenta(IdFerramenta);
+        objFe.setDisponivel(true);
+        objFe.UpdateFerramenta(objFe.getId(), objFe.getNome(), objFe.getMarca(), objFe.getCustoDeAquisicao(), objFe.getDisponivel());
+        
+        Amigo objAmigo = amigo.CarregaAmigo(EmailAmigo);
+        objAmigo.setDevedor(false);
+        objAmigo.UpdateAmigo(objAmigo.getNome(), objAmigo.getEmail(), objAmigo.getTelefone(), objAmigo.getDevedor());
+    }
+    
+//    Retorna se o amigo a ser cadastrado é um devedor ou não
+    public boolean devedor(String EmailAmigo) {
+        boolean devedor = false;
+        Date dateAtual = new Date();
+        for (int i = 0; i < getListaEmprestimo().size(); i++) {
+            if (getListaEmprestimo().get(i).getEmailAmigo().equals(EmailAmigo)) {
+                if (dateAtual.after(getListaEmprestimo().get(i).getDataDevolucao())) {
+                    if (getListaEmprestimo().get(i).getDevolvido() == false) {
+                        devedor = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return devedor;
+    }
+
+//    Retorna o total de devedores no sistema
+    public int totalDevedores() {
+        int devedores = 0;
+        for (int i = 0; i < amigo.getListaAmigo().size(); i++) {
+            if (amigo.getListaAmigo().get(i).getDevedor()) {
+                devedores++;
+            }
+        }
+        return devedores;
     }
 }

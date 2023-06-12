@@ -85,8 +85,19 @@ public class Amigo {
     }
     
     public Amigo CarregaAmigo(String email) {
-        dao.findById(email);
-        return null;
+        Amigo obj = dao.findById(email);
+        return obj;
+    }
+
+//    Verifica se o Amigo já tem Cadastro    
+    public boolean verificarCadastroAmigo(String email) {
+        boolean cadastro = false;
+        for (int i = 0; i < getListaAmigo().size(); i++) {
+            if (getListaAmigo().get(i).getEmail().equals(email))
+                cadastro = true;
+                break;
+        }
+        return cadastro;
     }
 
 }
