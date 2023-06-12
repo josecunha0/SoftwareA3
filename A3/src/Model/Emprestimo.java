@@ -4,15 +4,15 @@ import java.util.*;
 import DAO.EmprestimoDao;
 import Model.Ferramenta;
 import javax.swing.JOptionPane;
-import java.text.*;
+import java.time.LocalDate;
 
 public class Emprestimo {
 
 //    Atributos
     private int IdFerramenta;
     private String NomeAmigo;
-    private Date dataInicio;
-    private Date dataDevolucao;
+    private LocalDate dataInicio;
+    private LocalDate dataDevolucao;
     private String EmailAmigo;
     private boolean devolvido;
     private EmprestimoDao dao;
@@ -27,7 +27,7 @@ public class Emprestimo {
         this.amigo = new Amigo();
     }
 
-    public Emprestimo(int IdFerramenta, String NomeAmigo, Date dataInicio, Date dataDevolucao, String EmailAmigo, boolean devolvido) {
+    public Emprestimo(int IdFerramenta, String NomeAmigo, LocalDate dataInicio, LocalDate dataDevolucao, String EmailAmigo, boolean devolvido) {
         this.IdFerramenta = IdFerramenta;
         this.NomeAmigo = NomeAmigo;
         this.dataInicio = dataInicio;
@@ -56,19 +56,19 @@ public class Emprestimo {
         this.NomeAmigo = NomeAmigo;
     }
 
-    public Date getDataInicio() {
+    public LocalDate getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public Date getDataDevolucao() {
+    public LocalDate getDataDevolucao() {
         return dataDevolucao;
     }
 
-    public void setDataDevolucao(Date dataDevolucao) {
+    public void setDataDevolucao(LocalDate dataDevolucao) {
         this.dataDevolucao = dataDevolucao;
     }
     
@@ -88,7 +88,7 @@ public class Emprestimo {
         this.devolvido = devolvido;
     }
 
-    public boolean InsertEmprestimo(int IdFerramenta, String NomeAmigo, Date dataInicio, Date dataDevolucao, String EmailAmigo, boolean devolvido) {
+    public boolean InsertEmprestimo(int IdFerramenta, String NomeAmigo, LocalDate dataInicio, LocalDate dataDevolucao, String EmailAmigo, boolean devolvido) {
         Emprestimo obj = new Emprestimo(IdFerramenta, NomeAmigo, dataInicio, dataDevolucao, EmailAmigo, devolvido);
         dao.insert(obj);
         Ferramenta objFe = ferramenta.CarregaFerramenta(IdFerramenta);
@@ -102,7 +102,7 @@ public class Emprestimo {
         return true;
     }
     
-    public boolean UpdateEmprestimo(int IdFerramenta, String NomeAmigo, Date dataInicio, Date dataDevolucao, String EmailAmigo, boolean devolvido) {
+    public boolean UpdateEmprestimo(int IdFerramenta, String NomeAmigo, LocalDate dataInicio, LocalDate dataDevolucao, String EmailAmigo, boolean devolvido) {
         Emprestimo obj = new Emprestimo(IdFerramenta, NomeAmigo, dataInicio, dataDevolucao, EmailAmigo, devolvido);
         dao.update(obj);
         return true;
@@ -154,10 +154,10 @@ public class Emprestimo {
 //    Retorna se o amigo a ser cadastrado é um devedor ou não
     public boolean devedor(String EmailAmigo) {
         boolean devedor = false;
-        Date dateAtual = new Date();
+        LocalDate dateAtual = LocalDate.now();
         for (int i = 0; i < getListaEmprestimo().size(); i++) {
             if (getListaEmprestimo().get(i).getEmailAmigo().equals(EmailAmigo)) {
-                if (dateAtual.after(getListaEmprestimo().get(i).getDataDevolucao())) {
+                if (dateAtual.isAfter(getListaEmprestimo().get(i).getDataDevolucao())) {
                     if (getListaEmprestimo().get(i).getDevolvido() == false) {
                         devedor = true;
                         break;
@@ -178,4 +178,18 @@ public class Emprestimo {
         }
         return devedores;
     }
+    
+//    Atualiza automático se o amigo é um devedor ou não
+    public void atualizarDevedores() {
+        LocalDate dateAtual = LocalDate.now();
+        for (int i = 0; i < getListaEmprestimo().size(); i++) {
+            if (dateAtual.isAfter(getListaEmprestimo().get(i).getDataDevolucao())) {
+                Amigo obj = amigo.CarregaAmigo(getListaEmprestimo().get(i).getEmailAmigo());
+                obj.setDevedor(true);
+                obj.UpdateAmigo(obj.getNome(), obj.getEmail(), obj.getTelefone(), obj.getDevedor());
+                JOptionPane.showMessageDialog(null, "Foram adicionados novos devedores!");
+            }
+        }
+    }
+
 }
