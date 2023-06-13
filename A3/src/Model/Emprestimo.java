@@ -151,8 +151,8 @@ public class Emprestimo {
         objAmigo.UpdateAmigo(objAmigo.getNome(), objAmigo.getEmail(), objAmigo.getTelefone(), objAmigo.getDevedor());
     }
     
-//    Retorna se o amigo a ser cadastrado é um devedor ou não
-    public boolean devedor(String EmailAmigo) {
+//    Retorna se o amigo a ser cadastrado é um devedor ou não na hora do registro de um empréstimo
+    public boolean verificarDevedor(String EmailAmigo) {
         boolean devedor = false;
         LocalDate dateAtual = LocalDate.now();
         for (int i = 0; i < getListaEmprestimo().size(); i++) {
