@@ -36,7 +36,7 @@ public class EmprestimoDao {
                 emprestimo.setDataInicio(rs.getObject("data_inicio", LocalDate.class));
                 emprestimo.setDataDevolucao(rs.getObject("data_devolucao", LocalDate.class));
                 emprestimo.setEmailAmigo(rs.getString("email_amigo"));
-                emprestimo.setDevolvido(rs.getBoolean("devolvido")); // Nova linha para obter o valor de "devolvido"
+                emprestimo.setDevolvido(rs.getBoolean("devolvido"));
                 emprestimos.add(emprestimo);
             }
         } catch (SQLException e) {
@@ -67,7 +67,7 @@ public class EmprestimoDao {
                 emprestimo.setDataInicio(rs.getObject("data_inicio", LocalDate.class));
                 emprestimo.setDataDevolucao(rs.getObject("data_devolucao", LocalDate.class));
                 emprestimo.setEmailAmigo(rs.getString("email_amigo"));
-                emprestimo.setDevolvido(rs.getBoolean("devolvido")); // Nova linha para obter o valor de "devolvido"
+                emprestimo.setDevolvido(rs.getBoolean("devolvido"));
                 return emprestimo;
             }
         } catch (SQLException e) {
@@ -92,7 +92,7 @@ public class EmprestimoDao {
             st.setObject(3, emprestimo.getDataInicio());
             st.setObject(4, emprestimo.getDataDevolucao());
             st.setString(5, emprestimo.getEmailAmigo());
-            st.setBoolean(6, emprestimo.getDevolvido()); // Nova linha para definir o valor de "devolvido"
+            st.setBoolean(6, emprestimo.getDevolvido());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
@@ -112,7 +112,7 @@ public class EmprestimoDao {
             st.setObject(2, emprestimo.getDataInicio());
             st.setObject(3, emprestimo.getDataDevolucao());
             st.setString(4, emprestimo.getEmailAmigo());
-            st.setBoolean(5, emprestimo.getDevolvido()); // Nova linha para definir o valor de "devolvido"
+            st.setBoolean(5, emprestimo.getDevolvido());
             st.setInt(6, emprestimo.getIdFerramenta());
             st.setString(7, emprestimo.getEmailAmigo());
             st.executeUpdate();
