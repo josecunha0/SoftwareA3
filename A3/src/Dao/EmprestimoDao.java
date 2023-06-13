@@ -80,6 +80,34 @@ public class EmprestimoDao {
         return null;
     }
 
+    public String findAmigoComMaisEmprestimos() {
+        String amigoComMaisEmprestimos = null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+
+        try {
+            String sql = "SELECT nome_amigo, COUNT(*) AS total_emprestimos " +
+                         "FROM emprestimo_ativo " +
+                         "GROUP BY nome_amigo " +
+                         "ORDER BY total_emprestimos DESC " +
+                         "LIMIT 1";
+
+            st = conn.prepareStatement(sql);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                amigoComMaisEmprestimos = rs.getString("nome_amigo");
+            }
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(st);
+        }
+
+        return amigoComMaisEmprestimos;
+    }
+
     public void insert(Emprestimo emprestimo) {
         PreparedStatement st = null;
 
