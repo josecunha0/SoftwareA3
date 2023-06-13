@@ -31,6 +31,15 @@ public class Amigo {
     }
 
 //    Métodos Getter e Setter
+
+    public int getQuantidadeEmprestimos() {
+        return getQuantidadeEmprestimos();
+    }
+
+    public void setQuantidadeEmprestimos(int quantidadeEmprestimos) {
+        this.quantidadeEmprestimos = quantidadeEmprestimos;
+    }
+
     public String getNome() {
         return nome;
     }
