@@ -37,7 +37,6 @@ public class Amigo {
     }
 
     public void setQuantidadeEmprestimos(int quantidadeEmprestimos) {
-        this.quantidadeEmprestimos = quantidadeEmprestimos;
     }
 
     public String getNome() {

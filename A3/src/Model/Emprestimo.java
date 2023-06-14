@@ -191,5 +191,10 @@ public class Emprestimo {
             }
         }
     }
+    
+    public String amigoComMaisEmprestimos() {
+        String amigo = dao.findAmigoComMaisEmprestimos();
+        return amigo;
+    }
 
 }
