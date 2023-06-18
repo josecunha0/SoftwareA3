@@ -1,2 +1,2 @@
 # SoftwareA3
-Repositório criado para facilitar a visualização e edição dos arquivos em conjunto referentes ao backend da A3.
+Repositório para armazenar o arquivo fonte referente ao trabalho do semestre 2023/1.
